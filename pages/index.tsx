@@ -2,8 +2,16 @@ import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
+import Link from "next/link";
+import Date from "../components/date";
 
-export default function Home({ allPosts }) {
+export type PostMeta = {
+  id: string;
+  date: string;
+  title: string;
+};
+
+export default function Home({ allPosts }: { allPosts: PostMeta[] }) {
   return (
     <Layout home>
       <Head>
@@ -21,11 +29,11 @@ export default function Home({ allPosts }) {
         <ul className={utilStyles.list}>
           {allPosts.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>{title}</Link>
               <br />
-              {id}
-              <br />
-              {date}
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
             </li>
           ))}
         </ul>
