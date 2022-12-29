@@ -19,6 +19,10 @@ export default function Layout({
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
+          rel="stylesheet"
+        />
         <meta
           name="description"
           content="Learn how to build a personal website using Next.js"

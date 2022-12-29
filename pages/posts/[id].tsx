@@ -5,12 +5,17 @@ import Date from "../../components/date";
 import utilStyles from "../../styles/utils.module.css";
 import { PostMeta } from "..";
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface Post extends PostMeta {
   contentHtml: string;
 }
 
 export default function Post({ postData }: { postData: Post }) {
+  const router = useRouter()
+
+  
   return (
     <Layout>
       <Head>
