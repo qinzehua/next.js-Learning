@@ -1,5 +1,5 @@
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import {describe, expect, test} from '@jest/globals';
+import {describe, it, afterEach, expect, test} from '@jest/globals';
 
 import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
