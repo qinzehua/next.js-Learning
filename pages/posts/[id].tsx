@@ -13,9 +13,8 @@ interface Post extends PostMeta {
 }
 
 export default function Post({ postData }: { postData: Post }) {
-  const router = useRouter()
+  const router = useRouter();
 
-  
   return (
     <Layout>
       <Head>
@@ -32,15 +31,15 @@ export default function Post({ postData }: { postData: Post }) {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = getAllPostIds();
-  return {
-    paths,
-    fallback: false,
-  };
-}
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const paths = getAllPostIds();
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps = async function ({ params }) {
+export const getServerSideProps: GetStaticProps = async function ({ params }) {
   const postData = await getPostData(params?.id as string);
   return {
     props: {

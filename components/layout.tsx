@@ -1,9 +1,12 @@
 import Head from "next/head";
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import React from "react";
 import type { ReactNode } from "react";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+
+import styles from "./layout.module.css";
+import utilStyles from "../styles/utils.module.css";
 
 const name = "qinzehua";
 export const siteTitle = "Next.js Sample Website";
@@ -15,6 +18,18 @@ export default function Layout({
   children: ReactNode;
   home?: boolean;
 }) {
+  const router = useRouter();
+  const { locales, locale: activeLocale, pathname, query, asPath } = router;
+
+  console.log("--------", router.route);
+
+  console.log("router.locale: ", router.locale);
+  console.log("router.locales : ", router.locales);
+  console.log("router.defaultLocale : ", router.defaultLocale);
+  const changeLanguage = (lang: string) => {
+    Cookies.set("NEXT_LOCALE", lang);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -37,29 +52,52 @@ export default function Layout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
-        {home ? (
-          <>
-            <img
-              src="/images/profile.jpeg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-          <>
-            <Link href="/">
-              <img
-                src="/images/profile.jpeg"
-                className={`${styles.headerImage} ${utilStyles.borderCircle}`}
-                alt={name}
-              />
-            </Link>{" "}
-            <Link href="/" className={utilStyles.colorInherit}>
-              <h2 className={utilStyles.headingLg}>{name}</h2>{" "}
-            </Link>
-          </>
-        )}
+        <img
+          src="/images/profile.jpeg"
+          className={`${styles.headerImage} ${utilStyles.borderCircle}`}
+          alt={name}
+        />
+        <div style={{ display: "flex" }}>
+          <Link href="/" className={utilStyles.colorInherit}>
+            <h2 className={utilStyles.headingLg}>Home</h2>
+          </Link>
+          <div style={{ padding: 10 }}></div>
+          <Link href="/about" className={utilStyles.colorInherit}>
+            <h2 className={utilStyles.headingLg}>About</h2>
+          </Link>{" "}
+          <div style={{ padding: 10 }}></div>
+          <Link href="/pss/first" className={utilStyles.colorInherit}>
+            <h2 className={utilStyles.headingLg}>Pss</h2>
+          </Link>
+        </div>
+        <div>
+          <Link
+            href={{ pathname, query }}
+            as={asPath}
+            locale={"en"}
+            legacyBehavior
+          >
+            en
+          </Link>
+          /
+          <Link
+            href={{ pathname, query }}
+            as={asPath}
+            locale={"fr"}
+            legacyBehavior
+          >
+            fr
+          </Link>
+          /
+          <Link
+            href={{ pathname, query }}
+            as={asPath}
+            locale={"nl-NL"}
+            legacyBehavior
+          >
+            nl-NL
+          </Link>
+        </div>
       </header>
       <main className={styles.main}>{children}</main>
       {!home && (
@@ -69,4 +107,8 @@ export default function Layout({
       )}
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  return { props: { age: 10 } };
 }

@@ -4,6 +4,7 @@ import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import Date from "../components/date";
+import { useRouter } from "next/router";
 
 export type PostMeta = {
   id: string;
@@ -12,8 +13,11 @@ export type PostMeta = {
 };
 
 export default function Home({ allPosts }: { allPosts: PostMeta[] }) {
+  const router = useRouter();
+  const { pathname, asPath, query, locale } = router;
+
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{siteTitle}</title>
       </Head>
@@ -42,7 +46,7 @@ export default function Home({ allPosts }: { allPosts: PostMeta[] }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const allPosts = getSortedPostsData();
   return {
     props: {

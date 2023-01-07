@@ -1,12 +1,12 @@
 import React from "react";
 interface State {
-    count: number;
+  count: number;
 }
 
-export default class Counter extends React.Component {
-  constructor(props) {
+export default class Counter extends React.Component<any, State> {
+  constructor(props: any) {
     super(props);
-    this.state = {count: 0};
+    this.state = { count: 0 };
     this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
@@ -16,7 +16,7 @@ export default class Counter extends React.Component {
     document.title = `You clicked ${this.state.count} times`;
   }
   handleClick() {
-    this.setState(state => ({
+    this.setState((state) => ({
       count: state.count + 1,
     }));
   }
@@ -24,9 +24,7 @@ export default class Counter extends React.Component {
     return (
       <div>
         <p>You clicked {this.state.count} times</p>
-        <button onClick={this.handleClick}>
-          Click me
-        </button>
+        <button onClick={this.handleClick}>Click me</button>
       </div>
     );
   }
