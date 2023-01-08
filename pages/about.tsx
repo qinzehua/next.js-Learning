@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Layout from "../components/layout";
-import { getSortedPostsData } from "../lib/posts";
 
 const About: NextPage = () => {
   return (
     <Layout>
-      {" "}
+      {" 1 12 3 "}
       <div className="flex min-h-screen flex-col items-center justify-center py-2">
         <Head>
           <title>Create Next App</title>
@@ -88,3 +86,7 @@ const About: NextPage = () => {
 };
 
 export default About;
+
+export async function getServerSideProps() {
+  return { props: { age: 10 } };
+}

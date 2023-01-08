@@ -4,9 +4,12 @@ import React from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import getConfig from "next/config";
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
+import image from "../pages/images/profile.jpeg";
 
 const name = "qinzehua";
 export const siteTitle = "Next.js Sample Website";
@@ -21,7 +24,8 @@ export default function Layout({
   const router = useRouter();
   const { locales, locale: activeLocale, pathname, query, asPath } = router;
 
-  console.log("--------", router.route);
+  console.log("----route----", router.route);
+  console.log("----asPath----", router.asPath);
 
   console.log("router.locale: ", router.locale);
   console.log("router.locales : ", router.locales);
@@ -53,17 +57,31 @@ export default function Layout({
       </Head>
       <header className={styles.header}>
         <img
-          src="/images/profile.jpeg"
+          src="/nelo/images/profile.jpeg"
           className={`${styles.headerImage} ${utilStyles.borderCircle}`}
           alt={name}
         />
+        <h1>{process.env.customKey}</h1>
+        <h1>{publicRuntimeConfig.staticFolder}</h1>
         <div style={{ display: "flex" }}>
           <Link href="/" className={utilStyles.colorInherit}>
             <h2 className={utilStyles.headingLg}>Home</h2>
           </Link>
           <div style={{ padding: 10 }}></div>
           <Link href="/about" className={utilStyles.colorInherit}>
-            <h2 className={utilStyles.headingLg}>About</h2>
+            <h2 className={utilStyles.headingLg}>About </h2>
+          </Link>{" "}
+          <div style={{ padding: 10 }}></div>
+          <Link href="/about" as="/team" className={utilStyles.colorInherit}>
+            <h2 className={utilStyles.headingLg}>About/Team</h2>
+          </Link>{" "}
+          <div style={{ padding: 10 }}></div>
+          <Link
+            href="/about"
+            as="/about-us"
+            className={utilStyles.colorInherit}
+          >
+            <h2 className={utilStyles.headingLg}>About/About US</h2>
           </Link>{" "}
           <div style={{ padding: 10 }}></div>
           <Link href="/pss/first" className={utilStyles.colorInherit}>
@@ -107,8 +125,4 @@ export default function Layout({
       )}
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  return { props: { age: 10 } };
 }
